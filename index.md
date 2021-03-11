@@ -1,37 +1,139 @@
-## Welcome to GitHub Pages
+# ZWave
+ZWave Documentation...
 
-You can use the [editor on GitHub](https://github.com/elgerg/ZWave/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This readme is to help people who have a working ZWave network access specific weird undocumented command classes etc.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+I Set this up as i use an Assa abloy (Yale) ZWave module (SD-M1100) for the Conexis L1 smart lock with Node-red.
 
-### Markdown
+https://yalehome.co.uk/z-wave-module-2/
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+https://yalehome.co.uk/conexis-l1-chrome/
 
-```markdown
-Syntax highlighted code block
+So far the following commands work and give responses as expected (assuming the node is node 5):
 
-# Header 1
-## Header 2
-### Header 3
+## Unlock remotely:
+### Request:
+```javascript
+msg.topic = 'setValue'
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+msg.payload = {
+    "nodeid":5,
+    "cmdclass":98,
+    "instance":1,
+    "cmdidx":0,
+    "value":false
+    
+}
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Response:
+```json
+{
+    "value_id": "5-98-1-0",
+    "node_id": 5,
+    "class_id": 98,
+    "type": "bool",
+    "genre": "user",
+    "instance": 1,
+    "index": 0,
+    "label": "Locked",
+    "units": "",
+    "help": "",
+    "read_only": false,
+    "write_only": false,
+    "min": 0,
+    "max": 0,
+    "is_polled": false,
+    "value": false
+}{
+    "value_id": "5-98-1-1",
+    "node_id": 5,
+    "class_id": 98,
+    "type": "list",
+    "genre": "user",
+    "instance": 1,
+    "index": 1,
+    "label": "Locked (Advanced)",
+    "units": "",
+    "help": "",
+    "read_only": false,
+    "write_only": false,
+    "min": 0,
+    "max": 0,
+    "is_polled": false,
+    "values": ["Unsecure", "Unsecured with Timeout", "Inside Handle Unsecured", "Inside Handle Unsecured with Timeout", "Outside Handle Unsecured", "Outside Handle Unsecured with Timeout", "Secured", "Invalid"],
+    "value": "Unsecure"
+}{
+    "value_id": "5-113-1-0",
+    "node_id": 5,
+    "class_id": 113,
+    "type": "byte",
+    "genre": "user",
+    "instance": 1,
+    "index": 0,
+    "label": "Alarm Type",
+    "units": "",
+    "help": "",
+    "read_only": true,
+    "write_only": false,
+    "min": 0,
+    "max": 255,
+    "is_polled": false,
+    "value": 25
+}{
+    "value_id": "5-113-1-1",
+    "node_id": 5,
+    "class_id": 113,
+    "type": "byte",
+    "genre": "user",
+    "instance": 1,
+    "index": 1,
+    "label": "Alarm Level",
+    "units": "",
+    "help": "",
+    "read_only": true,
+    "write_only": false,
+    "min": 0,
+    "max": 255,
+    "is_polled": false,
+    "value": 1
+}
 
-### Jekyll Themes
+```
+## Request battery level:
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/elgerg/ZWave/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Request:
+```javascript
+msg.topic = 'refreshValue'
 
-### Support or Contact
+msg.payload = {
+    'args': [5, 128, 1, 0]
+};
+```
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### Response:
+```json
+{
+    "value_id": "5-128-1-0",
+    "node_id": 5,
+    "class_id": 128,
+    "type": "byte",
+    "genre": "user",
+    "instance": 1,
+    "index": 0,
+    "label": "Battery Level",
+    "units": "%",
+    "help": "",
+    "read_only": true,
+    "write_only": false,
+    "min": 0,
+    "max": 255,
+    "is_polled": false,
+    "value": 43
+}
+```
+
+# Contribution
+Talk to me, tell me what I can add. Put in a PR. I'm open to gaining as much info in this as I can and sharing it.
+
+Thanks!

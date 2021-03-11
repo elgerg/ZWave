@@ -134,6 +134,6 @@ msg.payload = {
 ```
 
 # Contribution
-Talk to me, tell me what i can add. Put in a PR. I'm open to gaining as much info in this as i can and sharing it.
+Talk to me, tell me what I can add. Put in a PR. I'm open to gaining as much info in this as I can and sharing it.
 
 Thanks!

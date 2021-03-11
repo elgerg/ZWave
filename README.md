@@ -7,15 +7,18 @@ I Set this up as i use an Assa abloy (Yale) ZWave module for the Conexis L1 smar
 
 So far the following commands work and give responses as expected (assuming the node is node 5):
 
-##Request battery level:
+## Request battery level:
 
-###Request:
+### Request:
+```javascript
 msg.topic = 'refreshValue'
 msg.payload = {
     'args': [5, 128, 1, 0]
 };
+```
 
-###Response:
+### Response:
+```json
 {
     "value_id": "5-128-1-0",
     "node_id": 5,
@@ -34,3 +37,4 @@ msg.payload = {
     "is_polled": false,
     "value": 43
 }
+```
